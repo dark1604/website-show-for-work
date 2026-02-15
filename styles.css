@@ -1,0 +1,294 @@
+/* 1. Базові налаштування */
+/* Перший шрифт — для заголовка */
+@font-face {
+    font-family: 'TitleFont';
+    src: url('fonts/RubikMonoOne-Regular.ttf') format('truetype');
+    font-weight: bold;
+}
+
+/* Другий шрифт — для звичайного тексту (параграфів) */
+@font-face {
+    font-family: 'MainTextFont';
+    src: url('fonts/SofiaSansSemiCondensed-Regular.ttf') format('truetype');
+    font-weight: normal;
+}
+
+/* Третій шрифт — для кнопок або акцентів */
+@font-face {
+    font-family: 'AccentFont';
+    src: url('fonts/JetBrainsMono-Bold.ttf') format('truetype');
+    font-weight: 500;
+}
+
+@keyframes slideUpFade {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        height: 250px;
+        opacity: 1;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: #050a05; /* Дуже темний зелений/чорний */
+    color: #ffffff;
+    font-family: 'MainTextFont', sans-serif; 
+    line-height: 1.6;
+
+}
+
+.main-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 20px 0; /* Відступи зверху та знизу */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Розподіляє простір між трьома блоками */
+    align-items: center;
+    max-width: 1400px; /* Або ваша ширина макету */
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Логотип та порожній блок справа мають бути однакової ширини */
+.logo, .header-right-empty {
+    flex: 1; /* Обидва блоки займають однаковий простір по краях */
+}
+
+.header-right-empty {
+    /* Нічого не відображає, просто тримає місце */
+}
+
+/* Логотип притиснутий до лівого краю свого блоку */
+.logo img {
+    height: 65px; /* Встановіть потрібний розмір тут */
+    width: auto;  /* Ширина підлаштується автоматично, щоб не було деформації */
+    display: block;
+    transition: transform 0.3s ease; /* Додамо плавний ефект при наведенні */
+}
+/* Опціонально: ефект при наведенні курсору */
+.logo img:hover {
+    transform: scale(1.05); /* Логотип трішки збільшиться при наведенні */
+}
+
+/* Меню */
+.main-nav {
+    flex: 2; /* Меню отримує більше простору для центрування */
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center; /* Центрує список всередині nav */
+    gap: 30px; /* Відстань між пунктами як у Figma */
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block; /* ВАЖЛИВО: transform працює тільки з inline-block або block */
+    transition: all 0.3s ease; /* Додаємо плавність */
+}
+
+.main-nav a:hover {
+    color: #00ff88;
+    transform: scale(1.2); /* Збільшення на 20% */
+}
+/* Стиль для активного посилання */
+.main-nav a.active {
+    color: #00ff88; /* Зелений колір як у кнопок */
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    font-weight: bold; /* Можна додати жирності */
+    border-bottom: 2px solid #00ff88; /* Або додати лінію знизу */
+    padding-bottom: 5px;
+}
+
+/* Щоб активне посилання теж трохи виділялося за розміром */
+.main-nav a.active {
+    transform: scale(1.1);
+    display: inline-block;
+}
+
+/* 2. Секція Hero */
+.hero {
+    position: relative;
+    min-height: 100vh; /* Щоб секція була на весь екран */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Додаємо фонове фото */
+background: linear-gradient(to bottom, 
+                rgba(5, 10, 5, 0) 0%,    /* Зверху прозоро */
+                rgba(5, 10, 5, 0.5) 70%,  /* Починає темніти */
+                #0a0f0a 100%),            /* Внизу колір фону другої секції */
+                url('images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    color: #ffffff;
+    text-align: center;
+}
+
+.hero::after {
+    animation: slideUpFade 2s ease-out; /* Анімація триватиме 2 секунди */
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 250px; /* Висота переходу (чим більше, тим повільніший перехід) */
+    background: linear-gradient(to bottom, transparent, #0a0f0a);
+    z-index: 1;
+}
+
+/* Напівпрозорий шар поверх картинки для читабельності тексту */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Накладаємо напівпрозорий темний фільтр */
+    background-color: rgba(0, 0, 0, 0.6); 
+    z-index: 1;
+}
+
+.hero-content {
+    osition: relative;
+    z-index: 2; /* Текст має бути вище за оверлей */
+}
+
+/* 3. Типографіка */
+.hero-title {
+    font-family: 'TitleFont', sans-serif;
+    font-size: 4rem; /* Великий розмір для заголовка */
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.hero-subtitle {
+    font-family: 'MainTextFont', sans-serif;
+    font-size: 1.5rem;
+    color: #cccccc;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 4. Кнопки */
+.hero-buttons {
+    display: flex;
+    flex-direction: column; /* Кнопки одна під одною, як на макеті */
+    gap: 20px;
+    align-items: center;
+}
+
+.btn {
+    font-family: 'AccentFont', sans-serif;
+    text-decoration: none;
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 50px; /* Округлі форми */
+    transition: all 0.3s ease;
+    min-width: 250px;
+    display: inline-block;
+}
+
+/* Контурна кнопка */
+.btn-outline {
+    border: 2px solid #00ff88;
+    color: #00ff88;
+    background: transparent;
+}
+
+.btn-outline:hover {
+    background: rgba(0, 255, 136, 0.1);
+    transform: translateY(-3px);
+}
+
+/* Кнопка зі світінням */
+.btn-glow {
+    background: #00ff88;
+    color: #050a05;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.5), 
+                0 0 30px rgba(0, 255, 136, 0.3);
+}
+
+.btn-glow:hover {
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.8), 
+                0 0 50px rgba(0, 255, 136, 0.5);
+    transform: translateY(-3px) scale(1.05);
+}
+
+
+/* Основні стилі секції */
+.info-section {
+    padding: 100px 0;
+    background-color: #0a0f0a; /* Темний фон, але трохи світліший за головний */
+    color: #ffffff;
+}
+
+.info-section .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 50px; /* Відстань між текстом і фото */
+}
+
+/* Стилі тексту */
+.info-text {
+    flex: 1; /* Займає 50% ширини */
+}
+
+.info-text h2 {
+    font-family: 'TitleFont', sans-serif; /* Використовуємо один з ваших шрифтів */
+    font-size: 2.5rem;
+    color: #00ff88; /* Акцентний колір */
+    margin-bottom: 20px;
+}
+
+.info-text p {
+    font-family: 'MainTextFont', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: #cccccc;
+}
+
+/* Стилі зображення */
+.info-image {
+    flex: 1; /* Займає інші 50% ширини */
+}
+
+.info-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px; /* Заокруглені кути як у кнопок */
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2); /* Легке світіння */
+}
